@@ -8,15 +8,7 @@
   <script type="text/javascript" src=" http://code.jquery.com/jquery-2.1.4.min.js"></script>
   <script src="socket.io.js"></script>
 <script type="text/javascript">
-/*
-(function() {
-    window.onmousemove = handleMouseMove;
-    function handleMouseMove(event) {
-        event = event || window.event; // IE対応
-        document.body.innerHTML = event.clientX + ", " + event.clientY;
-    }
-})();
-*/
+
 
 //  var s = io.connect(); //リモート
   var s = io.connect('http://10.228.56.31:3000'); //ローカル
@@ -37,32 +29,12 @@
     s.emit("C_to_S_message", {value:msg}); //サーバへ送信
   }
 
-/*
-  function sendBroadcast() {
-    var msg = $("#message").val(); //取得
-    $("#message").val(""); //空白にする
-    s.emit("C_to_S_broadcast", {value:msg}); // サーバへ送信
-  }
-*/
-
   function sendBroadcast(x, y) {
   	var array = new Array(x,y);
-  	//array[0]=x;
-  	//array[1]=y;
-    //var msg = $("#message").val(); //取得
-    //$("#message").val(""); //空白にする
+
     s.emit("C_to_S_broadcast",array); // サーバへ送信
   }
 
-  //jqueryでメッセージを追加
-  /*
-  function addMessage (value,color,size) {
-    var msg = value.replace( /[!@$%<>'"&|]/g, '' ); //タグ記号とかいくつか削除
-    $("#msg_list").prepend("<div class='msg'>" + msg + "</div>");
-    console.log(msg);
-    //document.body.innerHTML = msg;
-  }    
-*/
 	function getMousePos(){
 		window.onmousemove = handleMouseMove;
    		function handleMouseMove(event) {
