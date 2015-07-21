@@ -4,6 +4,7 @@
 <html>
 <head>
 	<title></title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
   <script type="text/javascript" src=" http://code.jquery.com/jquery-2.1.4.min.js"></script>
   <script src="socket.io.js"></script>
@@ -16,35 +17,34 @@
   //サーバから受け取るイベント
   s.on("connect", function () {});  // 接続時
   s.on("disconnect", function (client) {});  // 切断時
-  s.on("S_to_C_message", function (data) {
-    //addMessage(data.value);
-   console.log(data);
-   //  document.body.innerHTML =data;
+  s.on("mousePos",function(data){
+      document.body.innerHTML = "---"+data[0] + ", " + data[1];
+      getMousePos(data);
   });
 
-  //クライアントからイベント送信（イベント名は自由に設定できます）
-  function sendMessage() {
-    var msg = $("#message").val(); //取得
-    $("#message").val(""); //空白にする
-    s.emit("C_to_S_message", {value:msg}); //サーバへ送信
-  }
-
+//send data to server
   function sendBroadcast(x, y) {
   	var array = new Array(x,y);
-
     s.emit("C_to_S_broadcast",array); // サーバへ送信
   }
 
-	function getMousePos(){
+
+	function putMousePos(){
 		window.onmousemove = handleMouseMove;
    		function handleMouseMove(event) {
         	event = event || window.event; // IE対応
-        	document.body.innerHTML = event.clientX + ", " + event.clientY;
+        //	document.body.innerHTML = event.clientX + ", " + event.clientY;
         	sendBroadcast(event.clientX, event.clientY);
         }
 	}
 
-	getMousePos();
+   function getMousePos(data){
+     document.body.innerHTML = "rcv:"+data[0] + ". " + data[1]; 
+     console.log(data);
+   }
+
+	putMousePos();
+  getMousePos();
 </script>
 <body>
 
