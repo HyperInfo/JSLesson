@@ -26,6 +26,6 @@ io.sockets.on("connection", function (socket) {
 
   // 切断したときに送信
   socket.on("disconnect", function () {
-//    io.sockets.emit("S_to_C_message", {value:"user disconnected"});
+  	conlose.log("disconnected");
   });
 });
